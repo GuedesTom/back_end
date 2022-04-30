@@ -1,7 +1,7 @@
 const userRoute = require("./routing/user");
 const contentRoute = require("./routing/content");
 const pictureRoute = require("./routing/uploadPicture");
-const fileRoute = require("./routing/uploadContent");
+const fileRoute = require("./routing/upload");
 
 if (process.env.NODE_ENV === "production") {
   app.use(express.static("client/build"));
@@ -41,12 +41,9 @@ conn.once("open", () => {
   });
 });
 
-// Create mongo connection
-const connec = mongoose.createConnection(process.env.UPLOAD_PATH);
-
-connec.once("open", () => {
+conn.once("open", () => {
   // Init stream
-  gridfsBucketPicture = new mongoose.mongo.GridFSBucket(connec.db, {
+  gridfsBucketPicture = new mongoose.mongo.GridFSBucket(conn.db, {
     bucketName: "picture",
   });
 });
