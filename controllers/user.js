@@ -65,10 +65,33 @@ exports.modif = async (req, res) => {
   }
 };
 
-exports.afficher = async (req, res) => {
+exports.modifUser = async (req, res) => {
+  try {
+    let { id } = req.params;
+    let user = await User.findByIdAndUpdate(
+      id,
+      { $set: req.body },
+      { new: true }
+    );
+    res.status(200).json(user);
+  } catch (err) {
+    res.status(400).json(err);
+  }
+};
+
+exports.afficherById = async (req, res) => {
   try {
     let user = await User.findById(req.payload.id);
     res.status(200).json(user);
+  } catch (err) {
+    res.status(400).json(err);
+  }
+};
+
+exports.afficherAll = async (req, res) => {
+  try {
+    let users = await User.find();
+    res.status(200).json(users);
   } catch (err) {
     res.status(400).json(err);
   }

@@ -12,7 +12,7 @@ const storage = new GridFsStorage({
   file: (req, file) => {
     // format du nom du fichier
     const filename =
-      file.originalname + "-" + Date.now() + path.parse(file.originalname).ext;;
+      file.originalname;
     const fileInfo = {
       filename: filename,
       bucketName: "uploads",

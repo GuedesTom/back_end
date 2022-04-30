@@ -41,6 +41,15 @@ conn.once("open", () => {
   });
 });
 
+// Create mongo connection
+const connec = mongoose.createConnection(process.env.UPLOAD_PATH);
+
+connec.once("open", () => {
+  // Init stream
+  gridfsBucketPicture = new mongoose.mongo.GridFSBucket(connec.db, {
+    bucketName: "picture",
+  });
+});
 
 app.use(express.static("public"));
 app.use("/api/user", userRoute);
