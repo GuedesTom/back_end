@@ -2,6 +2,7 @@ require("dotenv").config();
 let express = require("express");
 const router = express.Router();
 const controle = require("../controllers/upload");
+const userController = require("../controllers/user");
 const multer = require("multer");
 const { GridFsStorage } = require("multer-gridfs-storage");
 const path = require("path");
@@ -23,10 +24,10 @@ const storage = new GridFsStorage({
 
 const upload = multer({ storage });
 
-router.post("/", upload.single("file"), controle.upload);
-router.get("/", controle.allFiles);
+router.post("/", userController.isLoggedIn, upload.single("file"), controle.upload);
+router.get("/", userController.isLoggedIn, controle.allFiles);
 router.get("/:filename", controle.fileByName);
 router.get("/download/:filename", controle.download);
-router.delete("/:id", controle.delete);
+router.delete("/:id", userController.isLoggedIn, controle.delete);
 
 module.exports = router;
