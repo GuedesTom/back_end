@@ -26,8 +26,8 @@ const upload = multer({ storage });
 
 router.post("/", userController.isLoggedIn, upload.single("file"), controle.upload);
 router.get("/", userController.isLoggedIn, controle.allFiles);
-router.get("/:filename", controle.fileByName);
 router.get("/download/:filename", controle.download);
+router.get("/:filename", controle.fileByName);
 router.delete("/:id", userController.isLoggedIn, controle.delete);
 
 module.exports = router;

@@ -3,13 +3,6 @@ const contentRoute = require("./routing/content");
 const pictureRoute = require("./routing/uploadPicture");
 const fileRoute = require("./routing/upload");
 
-if (process.env.NODE_ENV === "production") {
-  app.use(express.static("client/build"));
-  app.get("*", (req, res) => {
-    res.sendFile(path.resolve(__dirname, "client", "build", "index.html"));
-  });
-}
-
 let express = require("express");
 const mongoose = require("mongoose");
 const app = express();
@@ -54,6 +47,14 @@ app.use("/api/content", contentRoute);
 app.use("/api/file", fileRoute);
 app.use("/api/picture", pictureRoute);
 
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static("client/build"));
+  app.get("*", (req, res) => {
+    res.sendFile(path.resolve(__dirname, "client", "build", "index.html"));
+  });
+}
+
 app.listen(process.env.PORT, () =>
   console.log(`Serveur running on port ${process.env.PORT}`)
 );
+
